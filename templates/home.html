@@ -1,0 +1,286 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h1 class="display-3 text-center mb-3">OWASP Top 10 Vulnerabilities Lab</h1>
+        <p class="lead text-muted">Interactive learning environment for web application security</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+        <!-- SQL Injection -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-effect">
+                <div class="card-body text-center">
+                    <div class="icon-circle bg-danger mb-3 mx-auto">
+                        <i class="fas fa-database text-white"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">SQL Injection</h5>
+                    <p class="card-text text-muted small">Manipulate database queries</p>
+                    <a href="/sql-injection" class="btn btn-outline-danger btn-sm stretched-link">Explore</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- XSS -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-effect">
+                <div class="card-body text-center">
+                    <div class="icon-circle bg-warning mb-3 mx-auto">
+                        <i class="fas fa-code text-white"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">XSS</h5>
+                    <p class="card-text text-muted small">Inject malicious scripts into web pages</p>
+                    <a href="/xss" class="btn btn-outline-warning btn-sm stretched-link">Explore</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Broken Access Control -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-effect">
+                <div class="card-body text-center">
+                    <div class="icon-circle bg-info mb-3 mx-auto">
+                        <i class="fas fa-lock-open text-white"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Broken Access Control</h5>
+                    <p class="card-text text-muted small">Bypass authorization mechanisms</p>
+                    <a href="/broken-access-control" class="btn btn-outline-info btn-sm stretched-link">Explore</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Misconfiguration -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-effect">
+                <div class="card-body text-center">
+                    <div class="icon-circle bg-secondary mb-3 mx-auto">
+                        <i class="fas fa-cog text-white"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Security Misconfiguration</h5>
+                    <p class="card-text text-muted small">Exploit insecure default configurations</p>
+                    <a href="/security-misconfiguration" class="btn btn-outline-secondary btn-sm stretched-link">Explore</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insecure Deserialization -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-effect">
+                <div class="card-body text-center">
+                    <div class="icon-circle bg-purple mb-3 mx-auto">
+                        <i class="fas fa-exchange-alt text-white"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Insecure Deserialization</h5>
+                    <p class="card-text text-muted small">Manipulate serialized objects</p>
+                    <a href="/insecure-deserialization" class="btn btn-outline-purple btn-sm stretched-link">Explore</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sensitive Data Exposure -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-effect">
+                <div class="card-body text-center">
+                    <div class="icon-circle bg-pink mb-3 mx-auto">
+                        <i class="fas fa-id-card text-white"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Sensitive Data Exposure</h5>
+                    <p class="card-text text-muted small">Access unprotected sensitive information</p>
+                    <a href="/sensitive-data-exposure" class="btn btn-outline-pink btn-sm stretched-link">Explore</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Broken Authentication -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-effect">
+                <div class="card-body text-center">
+                    <div class="icon-circle bg-orange mb-3 mx-auto">
+                        <i class="fas fa-user-shield text-white"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Broken Authentication</h5>
+                    <p class="card-text text-muted small">Exploit authentication weaknesses</p>
+                    <a href="/broken_auth" class="btn btn-outline-orange btn-sm stretched-link">Explore</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SSRF -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-effect">
+                <div class="card-body text-center">
+                    <div class="icon-circle bg-teal mb-3 mx-auto">
+                        <i class="fas fa-server text-white"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">SSRF</h5>
+                    <p class="card-text text-muted small">Server-Side Request Forgery attacks</p>
+                    <a href="/ssrf" class="btn btn-outline-teal btn-sm stretched-link">Explore</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logging & Monitoring -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-effect">
+                <div class="card-body text-center">
+                    <div class="icon-circle bg-indigo mb-3 mx-auto">
+                        <i class="fas fa-clipboard-list text-white"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Logging & Monitoring</h5>
+                    <p class="card-text text-muted small">Insufficient logging and monitoring</p>
+                    <a href="/logging_monitoring" class="btn btn-outline-indigo btn-sm stretched-link">Explore</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vulnerable Components -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-effect">
+                <div class="card-body text-center">
+                    <div class="icon-circle bg-brown mb-3 mx-auto">
+                        <i class="fas fa-puzzle-piece text-white"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Vulnerable Components</h5>
+                    <p class="card-text text-muted small">Exploit known vulnerabilities</p>
+                    <a href="/vulnerable_components" class="btn btn-outline-brown btn-sm stretched-link">Explore</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insecure Design -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-effect">
+                <div class="card-body text-center">
+                    <div class="icon-circle bg-dark mb-3 mx-auto">
+                        <i class="fas fa-project-diagram text-white"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Insecure Design</h5>
+                    <p class="card-text text-muted small">Flaws in application architecture</p>
+                    <a href="/insecure_design" class="btn btn-outline-dark btn-sm stretched-link">Explore</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cryptographic Failures -->
+        <!-- <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-effect">
+                <div class="card-body text-center">
+                    <div class="icon-circle bg-primary mb-3 mx-auto">
+                        <i class="fas fa-key text-white"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Cryptographic Failures</h5>
+                    <p class="card-text text-muted small">Weak encryption implementations</p>
+                    <a href="/crypto_failures" class="btn btn-outline-primary btn-sm stretched-link">Explore</a>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Website -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-effect">
+                <div class="card-body text-center">
+                    <div class="icon-circle bg-success mb-3 mx-auto">
+                        <i class="fas fa-globe text-white"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">OWASP Website</h5>
+                    <p class="card-text text-muted small">Official OWASP resources</p>
+                    <a href="/owasp_clone" class="btn btn-outline-success btn-sm stretched-link">Explore</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .icon-circle {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+    
+    .hover-effect:hover {
+        transform: translateY(-5px);
+        transition: all 0.3s ease;
+    }
+    
+    .bg-purple {
+        background-color: #6f42c1;
+    }
+    .btn-outline-purple {
+        color: #6f42c1;
+        border-color: #6f42c1;
+    }
+    .btn-outline-purple:hover {
+        background-color: #6f42c1;
+        color: white;
+    }
+    
+    .bg-pink {
+        background-color: #d63384;
+    }
+    .btn-outline-pink {
+        color: #d63384;
+        border-color: #d63384;
+    }
+    .btn-outline-pink:hover {
+        background-color: #d63384;
+        color: white;
+    }
+    
+    .bg-orange {
+        background-color: #fd7e14;
+    }
+    .btn-outline-orange {
+        color: #fd7e14;
+        border-color: #fd7e14;
+    }
+    .btn-outline-orange:hover {
+        background-color: #fd7e14;
+        color: white;
+    }
+    
+    .bg-teal {
+        background-color: #20c997;
+    }
+    .btn-outline-teal {
+        color: #20c997;
+        border-color: #20c997;
+    }
+    .btn-outline-teal:hover {
+        background-color: #20c997;
+        color: white;
+    }
+    
+    .bg-indigo {
+        background-color: #6610f2;
+    }
+    .btn-outline-indigo {
+        color: #6610f2;
+        border-color: #6610f2;
+    }
+    .btn-outline-indigo:hover {
+        background-color: #6610f2;
+        color: white;
+    }
+    
+    .bg-brown {
+        background-color: #795548;
+    }
+    .btn-outline-brown {
+        color: #795548;
+        border-color: #795548;
+    }
+    .btn-outline-brown:hover {
+        background-color: #795548;
+        color: white;
+    }
+</style>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}

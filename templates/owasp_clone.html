@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+  .iframe-wrapper {
+    position: absolute;
+    top: 56px; /* Height of the navbar */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: calc(100vh - 56px); /* Fill remaining space below navbar */
+    overflow: hidden;
+  }
+  .iframe-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+</style>
+
+<div class="iframe-wrapper">
+  <iframe src="{{ url_for('static', filename='top10/index.html') }}"
+          title="OWASP Top 10 Clone">
+  </iframe>
+</div>
+{% endblock %}
