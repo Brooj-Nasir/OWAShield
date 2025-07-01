@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2 CLASS="display-3 text-center">Security Misconfiguration</h2>
+<p class="text-muted text-center">Test directory traversal and file access vulnerabilities</p>
+
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">Select File Request:</label>
+        <select class="form-select" name="payload" onchange="updatePayloadDisplay(this)">
+            {% for payload in payloads %}
+            <option value="{{ payload.payload }}">{{ payload.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Requested File Path:</label>
+        <pre id="payload-display" class="bg-light p-3">{{ payloads[0].payload }}</pre>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Request File</button>
+</form>
+
+{% if result_insecure or result_secure %}
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                Insecure Output
+                <button class="btn btn-sm btn-light float-end" data-bs-toggle="collapse" href="#insecureCode">
+                    View Code
+                </button>
+            </div>
+                <div class="card-body">
+                    {% if result_insecure %}
+                        {% if "Error:" in result_insecure %}
+                            <pre class="text-danger">{{ result_insecure }}</pre>
+                        {% else %}
+                            <pre class="text-success">File accessed successfully!</pre>
+                            <div class="file-content bg-light p-3 mt-2">
+                                {{ result_insecure }}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card border-success">
+            <div class="card-header bg-success text-white">
+                Secure Output
+                <button class="btn btn-sm btn-light float-end" data-bs-toggle="collapse" href="#secureCode">
+                    View Code
+                </button>
+            </div>
+                <div class="card-body">
+                    {% if result_secure %}
+                        {% if "Error:" in result_secure %}
+                            <pre class="text-danger">{{ result_secure }}</pre>
+                        {% else %}
+                            <pre class="text-success">File accessed successfully!</pre>
+                            <div class="file-content bg-light p-3 mt-2">
+                                {{ result_secure }}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="collapse" id="insecureCode">
+            <div class="card card-body">
+                <pre>def insecure_file_handler(filename):
+    return send_from_directory(INSECURE_UPLOADS, filename)</pre>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="collapse" id="secureCode">
+            <div class="card card-body">
+                <pre>def secure_file_handler(filename):
+    if '../' in filename:
+        raise ValueError("Invalid filename")
+    
+    safe_path = os.path.abspath(os.path.join(
+        SECURE_UPLOADS, filename))
+    
+    if not safe_path.startswith(
+        os.path.abspath(SECURE_UPLOADS)):
+        raise PermissionError("Access denied")
+    
+    return send_from_directory(SECURE_UPLOADS, filename)</pre>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2 CLASS="display-3 text-center">Broken Authentication</h2>
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">Select Test Case:</label>
+        <select class="form-select" onchange="updateCredentials(this)">
+            {% for payload in payloads %}
+            <option value="{{ loop.index0 }}">{{ payload.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Username:</label>
+        <input type="text" name="username" class="form-control" 
+               value="{{ payloads[0].username }}" id="usernameInput">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Password:</label>
+        <input type="password" name="password" class="form-control"
+               value="{{ payloads[0].password }}" id="passwordInput">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+{% if result_insecure or result_secure %}
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                Insecure Login
+                <button class="btn btn-sm btn-light float-end" data-bs-toggle="collapse" href="#insecureCode">
+                    View Code
+                </button>
+            </div>
+            <div class="card-body">
+                <pre>{{ result_insecure }}</pre>
+                {% if "Logged in" in result_insecure %}
+                <div class="alert alert-danger">
+                    SQL Injection possible in insecure implementation!
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card border-success">
+            <div class="card-header bg-success text-white">
+                Secure Login
+                <button class="btn btn-sm btn-light float-end" data-bs-toggle="collapse" href="#secureCode">
+                    View Code
+                </button>
+            </div>
+            <div class="card-body">
+                <pre>{{ result_secure }}</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="collapse" id="insecureCode">
+            <div class="card card-body">
+                <pre>def insecure_login(credentials):
+    query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
+    cursor.execute(query)</pre>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="collapse" id="secureCode">
+            <div class="card card-body">
+                <pre>def secure_login(credentials):
+    cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
+    if user and bcrypt.checkpw(password, user.password_hash):
+        return success</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function updateCredentials(select) {
+    const payloads = {{ payloads|tojson }};
+    const selected = payloads[select.value];
+    document.getElementById('usernameInput').value = selected.username;
+    document.getElementById('passwordInput').value = selected.password;
+}
+</script>
+{% endif %}
+{% endblock %}

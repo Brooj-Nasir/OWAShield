@@ -1,0 +1,233 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2 class="mb-4">Cryptographic Failures Demonstration</h2>
+
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">Select Test Case:</label>
+        <select class="form-select" name="payload" id="payloadSelect" onchange="updatePayloadDisplay(this)">
+            {% for payload in payloads %}
+            <option value="{{ payload.payload }}">{{ payload.name }} - {{ payload.payload }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Data to Encrypt:</label>
+        <pre id="payload-display" class="bg-light p-3 rounded">{{ payloads[0].payload }}</pre>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Encrypt Data</button>
+</form>
+
+{% if result_insecure or result_secure %}
+<div class="row mt-4">
+    <!-- Insecure Column -->
+    <div class="col-md-6 mb-4">
+        <div class="card border-danger h-100">
+            <div class="card-header bg-danger text-white">
+                <i class="bi bi-shield-slash"></i> Insecure Encryption (ECB Mode)
+                <button class="btn btn-sm btn-light float-end" data-bs-toggle="collapse" data-bs-target="#insecureCode">
+                    <i class="bi bi-code-slash"></i> View Code
+                </button>
+            </div>
+            <div class="card-body">
+                {% if result_insecure.error %}
+                    <div class="alert alert-danger">{{ result_insecure.error }}</div>
+                {% else %}
+                    <h5 class="text-danger mb-3">Identical Outputs for Same Input</h5>
+                    <div class="cipher-visualization mb-3">
+                        {% for i in range(0, result_insecure.output|length, 32) %}
+                        <div class="cipher-block {% if loop.index0 % 2 == 0 %}bg-danger{% else %}bg-warning{% endif %}">
+                            {{ result_insecure.output[i:i+32] }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="alert alert-danger">
+                        <h5><i class="bi bi-exclamation-octagon"></i> Security Issues:</h5>
+                        <ul class="mb-0">
+                            <li>Same input → Same output every time</li>
+                            <li>Visible patterns in ciphertext blocks</li>
+                            <li>No authentication against tampering</li>
+                            <li>Uses deprecated ECB mode</li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Secure Column -->
+    <div class="col-md-6 mb-4">
+        <div class="card border-success h-100">
+            <div class="card-header bg-success text-white">
+                <i class="bi bi-shield-check"></i> Secure Encryption (GCM Mode)
+                <button class="btn btn-sm btn-light float-end" data-bs-toggle="collapse" data-bs-target="#secureCode">
+                    <i class="bi bi-code-slash"></i> View Code
+                </button>
+            </div>
+            <div class="card-body">
+                {% if result_secure.error %}
+                    <div class="alert alert-danger">{{ result_secure.error }}</div>
+                {% else %}
+                    <h5 class="text-success mb-3">Unique Output Every Time</h5>
+                    <div class="secure-params">
+                        <div class="param-group mb-3">
+                            <span class="badge bg-primary">Salt</span>
+                            <div class="cipher-block bg-success">{{ result_secure.salt }}</div>
+                            <small class="text-muted">Unique salt for key derivation</small>
+                        </div>
+                        
+                        <div class="param-group mb-3">
+                            <span class="badge bg-primary">IV</span>
+                            <div class="cipher-block bg-success">{{ result_secure.iv }}</div>
+                            <small class="text-muted">Random initialization vector</small>
+                        </div>
+                        
+                        <div class="param-group mb-3">
+                            <span class="badge bg-primary">Ciphertext</span>
+                            <div class="cipher-block bg-success">{{ result_secure.ciphertext }}</div>
+                            <small class="text-muted">Encrypted data with authentication</small>
+                        </div>
+                        
+                        <div class="param-group">
+                            <span class="badge bg-primary">Auth Tag</span>
+                            <div class="cipher-block bg-success">{{ result_secure.tag }}</div>
+                            <small class="text-muted">Tamper-proof verification tag</small>
+                        </div>
+                    </div>
+                    <div class="alert alert-success mt-3">
+                        <h5><i class="bi bi-shield-lock"></i> Security Features:</h5>
+                        <ul class="mb-0">
+                            <li>Different output for same input</li>
+                            <li>Authenticated encryption (AEAD)</li>
+                            <li>Proper key derivation with salt</li>
+                            <li>Random IV for each encryption</li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Code Examples -->
+<div class="row mt-3">
+    <div class="col-md-6">
+        <div class="collapse" id="insecureCode">
+            <div class="card card-body bg-light">
+                <h5><i class="bi bi-file-code"></i> Insecure Code</h5>
+                <pre class="text-danger"># INSECURE ECB IMPLEMENTATION
+from Crypto.Cipher import AES
+
+# Hard-coded key (never do this!)
+KEY = b'weakpassword123'  
+
+def encrypt(data):
+    # ECB mode has no IV and shows patterns
+    cipher = AES.new(KEY, AES.MODE_ECB)
+    
+    # Bad manual padding
+    padded = data.ljust(16, '\0')  
+    
+    # Return hex encoded ciphertext
+    return cipher.encrypt(padded).hex()</pre>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="collapse" id="secureCode">
+            <div class="card card-body bg-light">
+                <h5><i class="bi bi-file-code"></i> Secure Code</h5>
+                <pre class="text-success"># SECURE GCM IMPLEMENTATION
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+import os
+
+def encrypt(data):
+    # Generate random salt and IV
+    salt = os.urandom(16)
+    iv = os.urandom(12)
+    
+    # Key derivation with PBKDF2
+    kdf = PBKDF2HMAC(
+        algorithm=hashes.SHA256(),
+        length=32,
+        salt=salt,
+        iterations=100000,
+    )
+    key = kdf.derive(os.environ['SECRET_KEY'])
+    
+    # Authenticated encryption
+    cipher = Cipher(
+        algorithms.AES(key),
+        modes.GCM(iv),
+    )
+    encryptor = cipher.encryptor()
+    
+    # Proper PKCS7 padding
+    padder = padding.PKCS7(128).padder()
+    padded = padder.update(data) + padder.finalize()
+    
+    ct = encryptor.update(padded) + encryptor.finalize()
+    
+    return {
+        'salt': salt.hex(),
+        'iv': iv.hex(),
+        'ciphertext': ct.hex(),
+        'tag': encryptor.tag.hex()
+    }</pre>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<script>
+function updatePayloadDisplay(select) {
+    const display = document.getElementById('payload-display');
+    const fullText = select.options[select.selectedIndex].text;
+    // Extract payload from "Name - Payload" format
+    const payload = fullText.split(' - ')[1]; 
+    display.textContent = payload;
+}
+</script>
+
+<style>
+.cipher-block {
+    padding: 0.5rem;
+    margin: 0.25rem 0;
+    border-radius: 4px;
+    font-family: monospace;
+    word-break: break-all;
+    font-size: 0.9em;
+}
+
+.cipher-visualization .cipher-block {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.bg-danger { background-color: #ffcccc; }
+.bg-warning { background-color: #fff3cd; }
+.bg-success { background-color: #d4edda; }
+
+.param-group {
+    border-left: 3px solid #007bff;
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.badge {
+    font-size: 0.8em;
+    margin-bottom: 0.5rem;
+}
+</style>
+
+{% endblock %}

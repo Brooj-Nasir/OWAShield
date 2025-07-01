@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2 CLASS="display-3 text-center">Server-Side Request Forgery (SSRF)</h2>
+<form method="POST">
+    <!-- Form structure similar to previous vulnerabilities -->
+    <div class="mb-3">
+        <label class="form-label">Select URL:</label>
+        <select class="form-select" name="payload" onchange="updatePayloadDisplay(this)">
+            {% for payload in payloads %}
+            <option value="{{ payload.payload }}">{{ payload.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Request URL:</label>
+        <pre id="payload-display" class="bg-light p-3">{{ payloads[0].payload }}</pre>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Fetch URL</button>
+</form>
+
+{% if result_insecure or result_secure %}
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                Insecure Fetch
+                <button class="btn btn-sm btn-light float-end" data-bs-toggle="collapse" href="#insecureCode">
+                    View Code
+                </button>
+            </div>
+            <div class="card-body">
+                <pre>{{ result_insecure }}</pre>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card border-success">
+            <div class="card-header bg-success text-white">
+                Secure Fetch
+                <button class="btn btn-sm btn-light float-end" data-bs-toggle="collapse" href="#secureCode">
+                    View Code
+                </button>
+            </div>
+            <div class="card-body">
+                <pre>{{ result_secure }}</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="collapse" id="insecureCode">
+            <div class="card card-body">
+                <pre>def insecure_fetch(url):
+    return requests.get(url).text</pre>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="collapse" id="secureCode">
+            <div class="card card-body">
+                <pre>def secure_fetch(url):
+    parsed = urlparse(url)
+    if parsed.hostname not in ALLOWED_DOMAINS:
+        raise ValueError("Unauthorized domain")
+    return requests.get(url).text</pre>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

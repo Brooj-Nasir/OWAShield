@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2  CLASS="display-3 text-center">Sensitive Data Exposure</h2>
+<p class="text-muted text-center">Test secure storage of sensitive information</p>
+
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">Select Test Case:</label>
+        <select class="form-select" name="payload" onchange="updatePayloadDisplay(this)">
+            {% for payload in payloads %}
+            <option value="{{ payload.payload }}">{{ payload.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Credit Card Number:</label>
+        <pre id="payload-display" class="bg-light p-3">{{ payloads[0].payload }}</pre>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Process Payment</button>
+</form>
+
+{% if result_insecure or result_secure %}
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                Insecure Storage
+                <button class="btn btn-sm btn-light float-end" data-bs-toggle="collapse" href="#insecureCode">
+                    View Code
+                </button>
+            </div>
+            <div class="card-body">
+                <pre class="text-danger">{{ result_insecure }}</pre>
+                <small class="text-muted">Stored in database as plain text</small>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card border-success">
+            <div class="card-header bg-success text-white">
+                Secure Storage
+                <button class="btn btn-sm btn-light float-end" data-bs-toggle="collapse" href="#secureCode">
+                    View Code
+                </button>
+            </div>
+            <div class="card-body">
+                <pre class="text-success">{{ result_secure }}</pre>
+                <small class="text-muted">Stored using AES-128 encryption</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="collapse" id="insecureCode">
+            <div class="card card-body">
+                <pre>def insecure_storage(card_number):
+    conn = sqlite3.connect('users.db')
+    conn.execute("INSERT INTO payment_info (card_number) VALUES (?)", 
+                (card_number,))
+    conn.commit()
+    return f"Stored: {card_number}"</pre>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="collapse" id="secureCode">
+            <div class="card card-body">
+                <pre>def secure_storage(card_number):
+    cipher = Fernet(KEY)
+    encrypted = cipher.encrypt(card_number.encode())
+    conn = sqlite3.connect('users.db')
+    conn.execute("INSERT INTO payment_info (encrypted_card) VALUES (?)", 
+                (encrypted,))
+    conn.commit()
+    return f"Stored: {encrypted.decode()}"</pre>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
