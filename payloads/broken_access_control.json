@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Regular User (Alice)",
+        "payload": "2"
+    },
+    {
+        "name": "Regular User (Bob)",
+        "payload": "3"
+    },
+    {
+        "name": "Admin User",
+        "payload": "1"
+    }
+]

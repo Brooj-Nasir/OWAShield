@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Credit Card Number",
+        "payload": "4242424242424242"
+    },
+    {
+        "name": "Social Security Number",
+        "payload": "123-45-6789"
+    },
+    {
+        "name": "Repeating Pattern",
+        "payload": "ABCDEFGHABCDEFGH"
+    }
+]

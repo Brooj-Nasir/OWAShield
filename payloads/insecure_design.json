@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Valid User Email",
+        "payload": "user@example.com"
+    },
+    {
+        "name": "Invalid Email Format",
+        "payload": "attacker"
+    }
+]

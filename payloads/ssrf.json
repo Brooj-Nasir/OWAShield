@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Legitimate API Call",
+        "payload": "https://api.trusted-domain.com/public-data"
+    },
+    {
+        "name": "Internal Metadata Attempt",
+        "payload": "http://169.254.169.254/latest/meta-data/"
+    },
+    {
+        "name": "Local File Read",
+        "payload": "file:///etc/passwd"
+    }
+]

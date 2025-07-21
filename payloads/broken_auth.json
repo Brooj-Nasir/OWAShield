@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Weak Credentials",
+        "username": "Brooj",
+        "password": "Brooj's.Arooj"
+    },
+    {
+        "name": "Weak Credentials",
+        "username": "alice",
+        "password": "password"
+    },
+    {
+        "name": "SQL Injection Attempt",
+        "username": "admin' --",
+        "password": ""
+    },
+    {
+        "name": "Strong Credentials",
+        "username": "admin",
+        "password": "secret"
+    }
+]

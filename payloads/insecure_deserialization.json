@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Benign JSON Payload",
+        "payload": "eyJ1c2VyIjogInRlc3QifQ=="
+    },
+    {
+        "name": "Malicious Pickle Payload",
+        "payload": "gASVLwAAAAAAAACMBXBvc2l4lIwGc3lzdGVtlJOUjB5lY2hvICJNYWxpY2lvdXMgY29kZSBleGVjdXRlZCEilIWUUpQu"
+    }
+]

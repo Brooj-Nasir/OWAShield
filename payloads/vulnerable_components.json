@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Benign XML",
+        "payload": "<note><body>Safe content</body></note>"
+    },
+    {
+        "name": "XXE Attack",
+        "payload": "<!DOCTYPE test [<!ENTITY xxe SYSTEM 'file:///etc/passwd'>]><test>&xxe;</test>"
+    }
+]

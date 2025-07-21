@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Failed Login Attempt",
+        "payload": "username=attacker&password=guess123"
+    },
+    {
+        "name": "SQL Injection Attempt",
+        "payload": "username=admin' --&password="
+    }
+]

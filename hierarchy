@@ -1,0 +1,18 @@
+flask_owasp_lab/
+│
+├── app.py
+├── vulnerabilities/
+│   └── sql_injection.py
+├── templates/
+│   ├── layout.html
+│   ├── home.html
+│   └── vulnerabilities/
+│       └── sql_injection.html
+├── static/
+│   └── style.css
+├── payloads/
+│   └── sql_injection.json
+├── data/
+│   ├── init_db.sql
+│   └── users.db
+└── init_db.py

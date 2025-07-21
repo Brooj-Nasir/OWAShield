@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Legitimate File Request",
+        "payload": "safe_file.txt"
+    },
+    {
+        "name": "Directory Traversal Attempt",
+        "payload": "../../app.py"
+    },
+    {
+        "name": "Sensitive File Access",
+        "payload": "credentials.txt"
+    }
+]

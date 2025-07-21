@@ -1,0 +1,16 @@
+Flask
+Flask-Talisman
+Flask-SeaSurf
+
+Werkzeug
+Jinja2
+PyMySQL
+cryptography
+bcrypt
+PyPDF2
+bleach
+defusedxml
+Flask-Bootstrap
+pycryptodome
+lxml
+structlog
