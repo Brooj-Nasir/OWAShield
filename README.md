@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 # OWASP Security Labs
 
@@ -65,3 +66,6 @@ http://localhost:5000
 3. Run `python3 app.py` to run the application.
 
 
+=======
+# OWAShield
+>>>>>>> 3ef91d85b640862bbf27c4ad42c84bcff8ffe9df
