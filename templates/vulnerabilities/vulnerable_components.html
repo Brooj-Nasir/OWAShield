@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2 CLASS="display-3 text-center">Vulnerable Components</h2>
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">Select XML Payload:</label>
+        <select class="form-select" name="payload" onchange="updatePayloadDisplay(this)">
+            {% for payload in payloads %}
+            <option value="{{ payload.payload }}">{{ payload.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">XML Data:</label>
+        <pre id="payload-display" class="bg-light p-3">{{ payloads[0].payload }}</pre>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Parse XML</button>
+</form>
+
+{% if result_insecure or result_secure %}
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                Insecure Parser (v2.4.1)
+                <button class="btn btn-sm btn-light float-end" data-bs-toggle="collapse" href="#insecureCode">
+                    View Code
+                </button>
+            </div>
+            <div class="card-body">
+                <pre>{{ result_insecure }}</pre>
+                {% if "etc/passwd" in result_insecure %}
+                <div class="alert alert-danger">
+                    XXE Vulnerability Exploited!
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card border-success">
+            <div class="card-header bg-success text-white">
+                Secure Parser (v3.2.0)
+                <button class="btn btn-sm btn-light float-end" data-bs-toggle="collapse" href="#secureCode">
+                    View Code
+                </button>
+            </div>
+            <div class="card-body">
+                <pre>{{ result_secure }}</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="collapse" id="insecureCode">
+            <div class="card card-body">
+                <pre>class InsecureXMLParser:
+    def parse(self, data):
+        # No XXE protection
+        return parse_xml(data)</pre>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="collapse" id="secureCode">
+            <div class="card card-body">
+                <pre>class SecureXMLParser:
+    def __init__(self):
+        self.entities = {}
+        
+    def parse(self, data):
+        if '!ENTITY' in data:
+            raise ValueError("XXE blocked")
+        return parse_xml(data)</pre>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
