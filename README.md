@@ -20,26 +20,26 @@ OWAShield is an open-source, hands-on educational platform designed to teach and
 
 ### 🔍 Interactive Lab Modules
 Explore 12 security labs with vulnerable and secure implementations:
-- ✅ SQL Injection (A03:2021)
-- ✅ Cross-Site Scripting (XSS) (A03:2021)
-- ✅ Broken Access Control (A01:2021)
-- ✅ Security Misconfiguration (A05:2021)
-- ✅ Insecure Deserialization(A08:2021)
-- ✅ Sensitive Data Exposure  (A02:2021)
-- ✅ Server-Side Request Forgery (SSRF) (A10:2021)
-- ✅ Broken Authentication  (A07:2021)
-- ✅ Vulnerable Components  (A06:2021)
-- ✅ Security Logging & Monitoring Failures (A09:2021)
-- ✅ Insecure Design(A04:2021)
+-  SQL Injection (A03:2021)
+-  Cross-Site Scripting (XSS) (A03:2021)
+-  Broken Access Control (A01:2021)
+-  Security Misconfiguration (A05:2021)
+-  Insecure Deserialization(A08:2021)
+-  Sensitive Data Exposure  (A02:2021)
+-  Server-Side Request Forgery (SSRF) (A10:2021)
+-  Broken Authentication  (A07:2021)
+-  Vulnerable Components  (A06:2021)
+-  Security Logging & Monitoring Failures (A09:2021)
+-  Insecure Design(A04:2021)
 
 Each module provides:
-- ⚠️ Vulnerable code demonstration
-- ✅ Secure code side-by-side
+- Vulnerable code demonstration
+- Secure code side-by-side
 - **Dual Mode Demonstrations**: Vulnerable vs. Secure implementations
 - **SQLite Database** for realistic attack scenarios
 - **User-friendly Interface**
-- 🧪 Predefined JSON-based attack payloads
-- 🧠 Real-time output of successful/blocked attacks
+-  Predefined JSON-based attack payloads
+-  Real-time output of successful/blocked attacks
 
 ### 📖 Theoretical OWASP Docs
 - Full OWASP Top 10 2021 website included
